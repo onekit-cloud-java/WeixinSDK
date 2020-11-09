@@ -6,13 +6,14 @@ import cn.onekit.thekit.JSON;
 import cn.onekit.thekit.STRING;
 import com.google.gson.JsonObject;
 import com.qq.weixin.api.WeixinAPI;
+import com.qq.weixin.api.entity.*;
 
 import java.util.HashMap;
 
 
-public class WeixinSDK extends WeixinAPI {
+public class WeixinSDK implements WeixinAPI {
 
-    static public String crypto(String sig_method, String session_key, String data) throws Exception {
+     public String _crypto(String sig_method, String session_key, String data) throws Exception {
         Crypto.Method method;
         switch (sig_method) {
             case "hmac_sha256":
@@ -25,7 +26,7 @@ public class WeixinSDK extends WeixinAPI {
     }
 
     @Override
-    public cgi_bin$token_response cgi_bin$token(String appid, String secret, String grant_type) {
+    public cgi_bin__token_response cgi_bin__token(String appid, String secret, String grant_type) {
         JsonObject result;
         try {
             String url = "https://api.weixin.qq.com/cgi-bin/token";
@@ -35,17 +36,17 @@ public class WeixinSDK extends WeixinAPI {
                 put("grant_type", grant_type);
             }}));
         } catch (Exception e) {
-            return new cgi_bin$token_response();
+            return new cgi_bin__token_response();
         }
         if (result.has("error")) {
-            return new cgi_bin$token_response();
+            return new cgi_bin__token_response();
         }
 
-        return JSON.json2object(result,cgi_bin$token_response.class);
+        return JSON.json2object(result,cgi_bin__token_response.class);
     }
 
     @Override
-    public wxa$checksession_response wxa$checksession(String access_token,String openid,String signature,String sig_method) {
+    public WeixinResponse wxa__checksession(String access_token,String openid,String signature,String sig_method) {
         JsonObject result;
         try {
             String url = "https://api.weixin.qq.com/wxa/checksession";
@@ -60,12 +61,12 @@ public class WeixinSDK extends WeixinAPI {
             result =new JsonObject();
         }
 
-        return JSON.json2object(result,wxa$checksession_response.class);
+        return JSON.json2object(result,WeixinResponse.class);
     }
 
 
     @Override
-    public snc$jscode2session_response snc$jscode2session(String appid,String secret,String js_code,String grant_type) {
+    public snc__jscode2session_response snc__jscode2session(String appid,String secret,String js_code,String grant_type) {
         JsonObject result ;
         try {
             String url = "https://api.weixin.qq.com/sns/jscode2session";
@@ -82,12 +83,12 @@ public class WeixinSDK extends WeixinAPI {
             result = new JsonObject();
         }
 
-        return JSON.json2object(result,snc$jscode2session_response.class);
+        return JSON.json2object(result,snc__jscode2session_response.class);
     }
 
 
     @Override
-    public wxa$img_sec_check_response wxa$img_sec_check(String access_token,wxa$img_sec_check_body body) {
+    public WeixinResponse wxa__img_sec_check(String access_token,wxa__img_sec_check_body body) {
         JsonObject reuslt;
         try {
             String url = String.format("https://api.weixin.qq.com/wxa/img_sec_check?access_token=%s",access_token);
@@ -97,11 +98,11 @@ public class WeixinSDK extends WeixinAPI {
             e.printStackTrace();
             reuslt = new JsonObject();
         }
-        return JSON.json2object(reuslt,wxa$img_sec_check_response.class);
+        return JSON.json2object(reuslt,WeixinResponse.class);
     }
 
     @Override
-    public wxa$media_check_async_response wxa$media_check_async(String access_token,wxa$media_check_async_body body) {
+    public wxa__media_check_async_response wxa__media_check_async(String access_token,wxa__media_check_async_body body) {
         JsonObject result;
         try {
             String url = String.format("https://api.weixin.qq.com/wxa/media_check_async?access_token=%s",access_token);
@@ -111,11 +112,11 @@ public class WeixinSDK extends WeixinAPI {
             e.printStackTrace();
             result = new JsonObject();
         }
-        return JSON.json2object(result,wxa$media_check_async_response.class);
+        return JSON.json2object(result,wxa__media_check_async_response.class);
     }
 
     @Override
-    public wxa$msg_sec_check_response wxa$msg_sec_check(String access_token, wxa$msg_sec_check_body body) {
+    public WeixinResponse wxa__msg_sec_check(String access_token, wxa__msg_sec_check_body body) {
         JsonObject result;
         try {
             String url = String.format("https://api.weixin.qq.com/wxa/msg_sec_check?access_token=%s",access_token);
@@ -125,12 +126,12 @@ public class WeixinSDK extends WeixinAPI {
             e.printStackTrace();
             result = new JsonObject();
         }
-        return JSON.json2object(result,wxa$msg_sec_check_response.class);
+        return JSON.json2object(result,WeixinResponse.class);
 
     }
 
     @Override
-    public wxa$remove_user_storage_response wxa$remove_user_storage(String access_token,String openid,String signature,String sig_method,wxa$remove_user_storage_body body) {
+    public WeixinResponse wxa__remove_user_storage(String access_token, String openid, String signature, String sig_method, wxa__remove_user_storage_body body) {
         JsonObject result;
         try {
             String url = String.format("https://api.weixin.qq.com/wxa/remove_user_storage?access_token=%s&signature=%s&openid=%s&sig_method=%s",
@@ -142,11 +143,11 @@ public class WeixinSDK extends WeixinAPI {
             e.printStackTrace();
             result = new JsonObject();
         }
-        return JSON.json2object(result,wxa$remove_user_storage_response.class);
+        return JSON.json2object(result,WeixinResponse.class);
     }
 
     @Override
-    public wxa$setuserinteractivedata_response wxa$setuserinteractivedata(String access_token, String openid, String signature, String sig_method, wxa$setuserinteractivedata_body body) {
+    public WeixinResponse wxa__setuserinteractivedata(String access_token, String openid, String signature, String sig_method, wxa__setuserinteractivedata_body body) {
         JsonObject result;
         try {
             String url = String.format("https://api.weixin.qq.com/wxa/setuserinteractivedata?access_token=%s&signature=%s&openid=%s&sig_method=%s",
@@ -157,11 +158,11 @@ public class WeixinSDK extends WeixinAPI {
             e.printStackTrace();
             result = new JsonObject();
         }
-        return JSON.json2object(result,wxa$setuserinteractivedata_response.class);
+        return JSON.json2object(result,WeixinResponse.class);
     }
 
     @Override
-    public wxa$set_user_storage_response wxa$set_user_storage(String access_token, String openid, String signature, String sig_method, wxa$set_user_storage_body body) {
+    public WeixinResponse wxa__set_user_storage(String access_token, String openid, String signature, String sig_method, wxa__set_user_storage_body body) {
         JsonObject result;
         try {
             String url = String.format("https://api.weixin.qq.com/wxa/set_user_storage?access_token=%s&signature=%s&openid=%s&sig_method=%s",
@@ -172,11 +173,11 @@ public class WeixinSDK extends WeixinAPI {
             e.printStackTrace();
             result = new JsonObject();
         }
-        return JSON.json2object(result,wxa$set_user_storage_response.class);
+        return JSON.json2object(result,WeixinResponse.class);
     }
 
     @Override
-    public cgi_bin$message$wxopen$activityid$create_response cgi_bin$message$wxopen$activityid$create(String access_token, String unionid) {
+    public cgi_bin__message__wxopen__activityid__create_response cgi_bin__message__wxopen__activityid__create(String access_token, String unionid) {
         JsonObject result;
         try {
             String url = "https://api.weixin.qq.com/cgi-bin/message/wxopen/activityid/create";
@@ -188,11 +189,11 @@ public class WeixinSDK extends WeixinAPI {
             e.printStackTrace();
             result = new JsonObject();
         }
-        return JSON.json2object(result,cgi_bin$message$wxopen$activityid$create_response.class);
+        return JSON.json2object(result,cgi_bin__message__wxopen__activityid__create_response.class);
     }
 
     @Override
-    public cgi_bin$message$wxopen$updatablemsg$send_response cgi_bin$message$wxopen$updatablemsg$send(String access_token,updatablemsg$send_body body) {
+    public WeixinResponse cgi_bin__message__wxopen__updatablemsg__send(String access_token,updatablemsg__send_body body) {
         JsonObject result;
         try {
             String url = String.format("https://api.weixin.qq.com/wxa/set_user_storage?access_token=%s",access_token);
@@ -202,11 +203,11 @@ public class WeixinSDK extends WeixinAPI {
             e.printStackTrace();
             result = new JsonObject();
         }
-        return JSON.json2object(result,cgi_bin$message$wxopen$updatablemsg$send_response.class);
+        return JSON.json2object(result,WeixinResponse.class);
     }
 
     @Override
-    public cgi_bin$wxaapp$createwxaqrcode_response cgi_bin$wxaapp$createwxaqrcode(String access_token,wxaapp$createwxaqrcode_body body) {
+    public cgi_bin__wxaapp__createwxaqrcode_response cgi_bin__wxaapp__createwxaqrcode(String access_token,wxaapp__createwxaqrcode_body body) {
         JsonObject result;
         try {
             String url = String.format("https://api.weixin.qq.com/cgi-bin/wxaapp/createwxaqrcode?access_token=%s",access_token);
@@ -216,11 +217,11 @@ public class WeixinSDK extends WeixinAPI {
             e.printStackTrace();
             result = new JsonObject();
         }
-        return JSON.json2object(result,cgi_bin$wxaapp$createwxaqrcode_response.class);
+        return JSON.json2object(result,cgi_bin__wxaapp__createwxaqrcode_response.class);
     }
 
     @Override
-    public wxa$getwxacode_response wxa$getwxacode(String access_token,wxa$getwxacode_body body) {
+    public WeixinResponse wxa__getwxacode(String access_token,wxa__getwxacode_body body) {
         JsonObject result;
         try {
             String url = String.format("https://api.weixin.qq.com/wxa/getwxacode?access_token=%s",access_token);
@@ -230,11 +231,11 @@ public class WeixinSDK extends WeixinAPI {
             e.printStackTrace();
             result = new JsonObject();
         }
-        return JSON.json2object(result,wxa$getwxacode_response.class);
+        return JSON.json2object(result,WeixinResponse.class);
     }
 
     @Override
-    public wxa$getwxacodeunlimit_response wxa$getwxacodeunlimit(String access_token,wxa$getwxacodeunlimit_body body) {
+    public wxa__getwxacodeunlimit_response wxa__getwxacodeunlimit(String access_token,wxa__getwxacodeunlimit_body body) {
         JsonObject result;
         try {
             String url = String.format("https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=%s",access_token);
@@ -244,37 +245,13 @@ public class WeixinSDK extends WeixinAPI {
             e.printStackTrace();
             result = new JsonObject();
         }
-        return JSON.json2object(result,wxa$getwxacodeunlimit_response.class);
-    }
-
-    @Override
-    public datacube$getgameanalysisdata_response datacube$getgameanalysisdata(String s, datacube$getgameanalysisdata_body datacube$getgameanalysisdata_body) {
-        return null;
-    }
-
-    @Override
-    public wxa$createwxagameroom_response wxa$createwxagameroom(String s, wxa$createwxagameroom_body wxa$createwxagameroom_body) {
-        return null;
-    }
-
-    @Override
-    public wxa$getwxagameframe_response wxa$getwxagameframe(String s, String s1, long l, long l1) {
-        return null;
-    }
-
-    @Override
-    public wxa$getwxagameidentityinfo_response wxa$getwxagameidentityinfo(String s, String s1) {
-        return null;
-    }
-
-    @Override
-    public wxa$getwxagameroominfo_response wxa$getwxagameroominfo(String s, String s1) {
-        return null;
+        return JSON.json2object(result,wxa__getwxacodeunlimit_response.class);
     }
 
 
+
     @Override
-    public cgi_bin$message$subscribe$send_response cgi_bin$message$subscribe$send(String access_token,subscribe$send_body body) {
+    public WeixinResponse cgi_bin__message__subscribe__send(String access_token,subscribe__send_body body) {
         JsonObject result;
         try {
             String url = String.format("https://api.weixin.qq.com/datacube/getgameanalysisdata?access_token=%s",access_token);
@@ -284,7 +261,7 @@ public class WeixinSDK extends WeixinAPI {
             e.printStackTrace();
             result = new JsonObject();
         }
-        return JSON.json2object(result,cgi_bin$message$subscribe$send_response.class);
+        return JSON.json2object(result,WeixinResponse.class);
     }
 
 

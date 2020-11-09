@@ -6,15 +6,15 @@
 
     <groupId>cn.onekit.x2x.cloud</groupId>
     <artifactId>weixinsdk</artifactId>
-    <version>1.0.0</version>
+    <version>1.2.1</version>
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>7</source>
-                    <target>7</target>
+                    <source>8</source>
+                    <target>8</target>
                 </configuration>
             </plugin>
         </plugins>
@@ -36,7 +36,7 @@
         <dependency>
             <groupId>cn.onekit.x2x.cloud</groupId>
             <artifactId>weixin</artifactId>
-            <version>1.0.1</version>
+            <version>1.2.1</version>
         </dependency>
     </dependencies>
     <licenses>
@@ -62,6 +62,7 @@
 
         <profile>
             <id>release</id>
+
             <build>
                 <resources>
                     <resource>
