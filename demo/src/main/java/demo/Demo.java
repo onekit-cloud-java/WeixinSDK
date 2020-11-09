@@ -22,10 +22,10 @@ public class Demo {
     public WeixinResponse checkSessionKey(
             @RequestParam String access_token,
             @RequestParam String openid,
-            @RequestParam String session_key,
-            @RequestParam String data) throws Exception {
-        String signature = new WeixinSDK()._crypto(sig_method, session_key,data);
-        return new WeixinSDK().wxa__checksession(access_token,openid,signature,sig_method);
+            @RequestParam String session_key) throws Exception {
+        String body = "xx";
+        String signature = new WeixinSDK()._crypto(sig_method, session_key,body);
+        return new WeixinSDK().wxa__checksession(access_token,openid,signature,sig_method,body);
     }
 
     @RequestMapping("/code2Session")

@@ -46,16 +46,11 @@ public class WeixinSDK implements WeixinAPI {
     }
 
     @Override
-    public WeixinResponse wxa__checksession(String access_token,String openid,String signature,String sig_method) {
+    public WeixinResponse wxa__checksession(String access_token,String openid,String signature,String sig_method,String body) {
         JsonObject result;
         try {
-            String url = "https://api.weixin.qq.com/wxa/checksession";
-            result = (JsonObject) JSON.parse(AJAX.request(url,"get",new HashMap<String, String>(){{
-                put("appid", access_token);
-                put("secret", openid);
-                put("signature", signature);
-                put("sig_method",sig_method);
-            }}));
+            String url = String.format("https://api.weixin.qq.com/wxa/checksession?access_token=%s&openid=%s&signature=%s&sig_method=%s",access_token,openid,signature,sig_method);
+            result = (JsonObject) JSON.parse(AJAX.request(url,"POST", body));
         } catch (Exception e) {
             e.printStackTrace();
             result =new JsonObject();

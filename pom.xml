@@ -6,7 +6,7 @@
 
     <groupId>cn.onekit.x2x.cloud</groupId>
     <artifactId>weixinsdk</artifactId>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
     <build>
         <plugins>
             <plugin>
@@ -36,7 +36,7 @@
         <dependency>
             <groupId>cn.onekit.x2x.cloud</groupId>
             <artifactId>weixin</artifactId>
-            <version>1.2.1</version>
+            <version>1.2.2</version>
         </dependency>
     </dependencies>
     <licenses>
