@@ -26,7 +26,7 @@ public class WeixinSDK implements WeixinAPI {
     }
 
     @Override
-    public cgi_bin__token_response cgi_bin__token(String appid, String secret, String grant_type) {
+    public cgi_bin__token_response cgi_bin__token(String appid, String secret, String grant_type) throws WeixinError{
         JsonObject result;
         try {
             String url = "https://api.weixin.qq.com/cgi-bin/token";
@@ -36,10 +36,10 @@ public class WeixinSDK implements WeixinAPI {
                 put("grant_type", grant_type);
             }}));
         } catch (Exception e) {
-            return new cgi_bin__token_response();
-        }
-        if (result.has("error")) {
-            return new cgi_bin__token_response();
+            WeixinError error = new WeixinError();
+            error.setErrcode(9527);
+            error.setErrmsg(e.getMessage());
+            throw error;
         }
 
         return JSON.json2object(result,cgi_bin__token_response.class);
@@ -52,8 +52,10 @@ public class WeixinSDK implements WeixinAPI {
             String url = String.format("https://api.weixin.qq.com/wxa/checksession?access_token=%s&openid=%s&signature=%s&sig_method=%s",access_token,openid,signature,sig_method);
             result = (JsonObject) JSON.parse(AJAX.request(url,"POST", body));
         } catch (Exception e) {
-            e.printStackTrace();
-            result =new JsonObject();
+            cgi_bin__token_response error = new cgi_bin__token_response();
+            error.setErrcode(9527);
+            error.setErrmsg(e.getMessage());
+            return error;
         }
 
         return JSON.json2object(result,WeixinResponse.class);
@@ -74,8 +76,10 @@ public class WeixinSDK implements WeixinAPI {
                 }
             }}));
         } catch (Exception e) {
-            e.printStackTrace();
-            result = new JsonObject();
+            snc__jscode2session_response error = new snc__jscode2session_response();
+            error.setErrcode(9527);
+            error.setErrmsg(e.getMessage());
+            return error;
         }
 
         return JSON.json2object(result,snc__jscode2session_response.class);
@@ -90,8 +94,10 @@ public class WeixinSDK implements WeixinAPI {
             JsonObject post_body = (JsonObject) JSON.object2json(body);
             reuslt = (JsonObject) JSON.parse(AJAX.request(url,"post",post_body.toString()));
         } catch (Exception e) {
-            e.printStackTrace();
-            reuslt = new JsonObject();
+            snc__jscode2session_response error = new snc__jscode2session_response();
+            error.setErrcode(9527);
+            error.setErrmsg(e.getMessage());
+            return error;
         }
         return JSON.json2object(reuslt,WeixinResponse.class);
     }
@@ -104,8 +110,10 @@ public class WeixinSDK implements WeixinAPI {
             JsonObject post_body = (JsonObject) JSON.object2json(body);
             result = (JsonObject) JSON.parse(AJAX.request(url,"post",post_body.toString()));
         } catch (Exception e) {
-            e.printStackTrace();
-            result = new JsonObject();
+            wxa__media_check_async_response error = new wxa__media_check_async_response();
+            error.setErrcode(9527);
+            error.setErrmsg(e.getMessage());
+            return error;
         }
         return JSON.json2object(result,wxa__media_check_async_response.class);
     }
@@ -118,8 +126,10 @@ public class WeixinSDK implements WeixinAPI {
             JsonObject post_body = (JsonObject) JSON.object2json(body);
             result = (JsonObject) JSON.parse(AJAX.request(url,"post",post_body.toString()));
         } catch (Exception e) {
-            e.printStackTrace();
-            result = new JsonObject();
+            WeixinResponse error = new WeixinResponse();
+            error.setErrcode(9527);
+            error.setErrmsg(e.getMessage());
+            return error;
         }
         return JSON.json2object(result,WeixinResponse.class);
 
@@ -135,8 +145,10 @@ public class WeixinSDK implements WeixinAPI {
             result = (JsonObject) JSON.parse(AJAX.request(url,"post",post_body.toString()));
 
         } catch (Exception e) {
-            e.printStackTrace();
-            result = new JsonObject();
+            WeixinResponse error = new WeixinResponse();
+            error.setErrcode(9527);
+            error.setErrmsg(e.getMessage());
+            return error;
         }
         return JSON.json2object(result,WeixinResponse.class);
     }
@@ -150,8 +162,10 @@ public class WeixinSDK implements WeixinAPI {
             JsonObject post_body = (JsonObject) JSON.object2json(body);
             result = (JsonObject) JSON.parse(AJAX.request(url,"post",post_body.toString()));
         } catch (Exception e) {
-            e.printStackTrace();
-            result = new JsonObject();
+            WeixinResponse error = new WeixinResponse();
+            error.setErrcode(9527);
+            error.setErrmsg(e.getMessage());
+            return error;
         }
         return JSON.json2object(result,WeixinResponse.class);
     }
@@ -165,8 +179,10 @@ public class WeixinSDK implements WeixinAPI {
             JsonObject post_body = (JsonObject) JSON.object2json(body);
             result = (JsonObject) JSON.parse(AJAX.request(url,"post",post_body.toString()));
         } catch (Exception e) {
-            e.printStackTrace();
-            result = new JsonObject();
+            WeixinResponse error = new WeixinResponse();
+            error.setErrcode(9527);
+            error.setErrmsg(e.getMessage());
+            return error;
         }
         return JSON.json2object(result,WeixinResponse.class);
     }
@@ -181,8 +197,9 @@ public class WeixinSDK implements WeixinAPI {
                 put("unionid",unionid);
             }}));
         } catch (Exception e) {
-            e.printStackTrace();
-            result = new JsonObject();
+            cgi_bin__message__wxopen__activityid__create_response error = new cgi_bin__message__wxopen__activityid__create_response();
+            error.setErrcode(9527);
+            return error;
         }
         return JSON.json2object(result,cgi_bin__message__wxopen__activityid__create_response.class);
     }
@@ -195,8 +212,10 @@ public class WeixinSDK implements WeixinAPI {
             JsonObject post_body = (JsonObject) JSON.object2json(body);
             result = (JsonObject) JSON.parse(AJAX.request(url,"post",post_body.toString()));
         } catch (Exception e) {
-            e.printStackTrace();
-            result = new JsonObject();
+            WeixinResponse error = new WeixinResponse();
+            error.setErrcode(9527);
+            error.setErrmsg(e.getMessage());
+            return error;
         }
         return JSON.json2object(result,WeixinResponse.class);
     }
@@ -209,8 +228,10 @@ public class WeixinSDK implements WeixinAPI {
             JsonObject post_body = (JsonObject) JSON.object2json(body);
             result = (JsonObject) JSON.parse(AJAX.request(url,"post",post_body.toString()));
         } catch (Exception e) {
-            e.printStackTrace();
-            result = new JsonObject();
+            cgi_bin__wxaapp__createwxaqrcode_response error = new cgi_bin__wxaapp__createwxaqrcode_response();
+            error.setErrcode(9527);
+            error.setErrmsg(e.getMessage());
+            return error;
         }
         return JSON.json2object(result,cgi_bin__wxaapp__createwxaqrcode_response.class);
     }
@@ -223,8 +244,10 @@ public class WeixinSDK implements WeixinAPI {
             JsonObject post_body = (JsonObject) JSON.object2json(body);
             result = (JsonObject) JSON.parse(AJAX.request(url,"post",post_body.toString()));
         } catch (Exception e) {
-            e.printStackTrace();
-            result = new JsonObject();
+            WeixinResponse error = new WeixinResponse();
+            error.setErrcode(9527);
+            error.setErrmsg(e.getMessage());
+            return error;
         }
         return JSON.json2object(result,WeixinResponse.class);
     }
@@ -237,8 +260,10 @@ public class WeixinSDK implements WeixinAPI {
             JsonObject post_body = (JsonObject) JSON.object2json(body);
             result = (JsonObject) JSON.parse(AJAX.request(url,"post",post_body.toString()));
         } catch (Exception e) {
-            e.printStackTrace();
-            result = new JsonObject();
+            wxa__getwxacodeunlimit_response error = new wxa__getwxacodeunlimit_response();
+            error.setErrcode(9527);
+            error.setErrmsg(e.getMessage());
+            return error;
         }
         return JSON.json2object(result,wxa__getwxacodeunlimit_response.class);
     }
@@ -253,8 +278,10 @@ public class WeixinSDK implements WeixinAPI {
             JsonObject post_body = (JsonObject) JSON.object2json(body);
             result = (JsonObject) JSON.parse(AJAX.request(url,"post",post_body.toString()));
         } catch (Exception e) {
-            e.printStackTrace();
-            result = new JsonObject();
+            WeixinResponse error = new WeixinResponse();
+            error.setErrcode(9527);
+            error.setErrmsg(e.getMessage());
+            return error;
         }
         return JSON.json2object(result,WeixinResponse.class);
     }
