@@ -98,3 +98,5 @@ hs_err_pid*
 .idea/vcs.xml
 .idea/WeixinSDK.iml
 .idea/$PRODUCT_WORKSPACE_FILE$
+.idea/libraries/Maven__cn_onekit_x2x_cloud_thekit_1_3_1.xml
+.idea/libraries/Maven__cn_onekit_x2x_cloud_weixin_1_3_0.xml
