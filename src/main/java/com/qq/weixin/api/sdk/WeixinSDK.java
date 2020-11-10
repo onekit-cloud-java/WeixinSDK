@@ -91,8 +91,7 @@ public class WeixinSDK implements WeixinAPI {
         JsonObject reuslt;
         try {
             String url = String.format("https://api.weixin.qq.com/wxa/img_sec_check?access_token=%s",access_token);
-            JsonObject post_body = (JsonObject) JSON.object2json(body);
-            reuslt = (JsonObject) JSON.parse(AJAX.request(url,"post",post_body.toString()));
+            reuslt = (JsonObject) JSON.parse(AJAX.upload(url,body.getMedia().getValue(),body.getMedia().getContentType()));
         } catch (Exception e) {
             snc__jscode2session_response error = new snc__jscode2session_response();
             error.setErrcode(9527);

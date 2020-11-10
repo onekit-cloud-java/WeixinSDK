@@ -5,17 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cn.onekit.x2x.cloud</groupId>
-    <artifactId>weixinsdk</artifactId>
-    <version>1.2.3</version>
+    <artifactId>weixin-sdk</artifactId>
+    <version>1.3.0</version>
     <name>WeixinSDK</name>
     <url>https://github.com/onekit-cloud-java/weixinsdk</url>
     <description>weixin cloud sdk</description>
     <dependencies>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.8.2</version>
-        </dependency>
         <dependency>
             <groupId>cn.onekit.x2x.cloud</groupId>
             <artifactId>thekit</artifactId>
@@ -24,7 +19,7 @@
         <dependency>
             <groupId>cn.onekit.x2x.cloud</groupId>
             <artifactId>weixin</artifactId>
-            <version>1.2.3</version>
+            <version>1.3.0</version>
         </dependency>
     </dependencies>
     <licenses>
@@ -34,9 +29,9 @@
         </license>
     </licenses>
     <scm>
-        <connection>scm:git:https://github.com/onekit-cloud-java/toutiaosdk.git</connection>
-        <developerConnection>scm:git:https://github.com/onekit-cloud-java/toutiaosdk.git</developerConnection>
-        <url>git:https://github.com/onekit-cloud-java/toutiaosdk.git</url>
+        <connection>scm:git:https://github.com/onekit-cloud-java/weixinsdk.git</connection>
+        <developerConnection>scm:git:https://github.com/onekit-cloud-java/weixinsdk.git</developerConnection>
+        <url>git:https://github.com/onekit-cloud-java/weixinsdk.git</url>
     </scm>
     <developers>
         <developer>

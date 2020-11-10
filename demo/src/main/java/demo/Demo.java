@@ -3,9 +3,14 @@ package demo;
 import com.qq.weixin.api.WeixinAPI;
 import com.qq.weixin.api.entity.*;
 import com.qq.weixin.api.sdk.WeixinSDK;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 
 
 @RestController
@@ -37,14 +42,30 @@ public class Demo {
     @RequestMapping("/imgSecCheck")
     public WeixinResponse imgSecCheck(
             @RequestParam String access_token) throws Exception {
-        WeixinSDK WeixinSDK=new WeixinSDK();
         Media Media = new Media();
         Media.setContentType("image/png");
-        Media.setValue(null);
+        //
+        File file = ResourceUtils.getFile("classpath:demo.png");
+        FileInputStream fis = new FileInputStream(file);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+        byte[] b = new byte[1024];
+
+        int n;
+
+        while ((n = fis.read(b)) != -1) {
+            bos.write(b, 0, n);
+        }
+
+        byte[] data = bos.toByteArray();
+        bos.close();
+        fis.close();
+        Media.setValue(data);
+        //
         wxa__img_sec_check_body body = new wxa__img_sec_check_body();
         body.setMedia(Media);
 
-        return new WeixinSDK().wxa__img_sec_check(access_token,body);
+        return new WeixinSDK().wxa__img_sec_check(access_token, body);
 
     }
 
