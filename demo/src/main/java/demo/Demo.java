@@ -42,9 +42,6 @@ public class Demo {
     @RequestMapping("/imgSecCheck")
     public WeixinResponse imgSecCheck(
             @RequestParam String access_token) throws Exception {
-        Media Media = new Media();
-        Media.setContentType("image/png");
-        //
         File file = ResourceUtils.getFile("classpath:demo.png");
         FileInputStream fis = new FileInputStream(file);
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -60,6 +57,9 @@ public class Demo {
         byte[] data = bos.toByteArray();
         bos.close();
         fis.close();
+        //
+        Media Media = new Media();
+        Media.setContentType("image/png");
         Media.setValue(data);
         //
         wxa__img_sec_check_body body = new wxa__img_sec_check_body();
