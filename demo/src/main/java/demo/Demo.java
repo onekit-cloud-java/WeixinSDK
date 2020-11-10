@@ -3,6 +3,7 @@ package demo;
 import cn.onekit.thekit.JSON;
 import com.qq.weixin.api.entity.*;
 import com.qq.weixin.api.sdk.WeixinSDK;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -158,47 +159,47 @@ public class Demo {
     }
 
     @RequestMapping("/createQRCode")
-    public byte[] createQRCode(
+    public String createQRCode(
             @RequestParam String access_token) throws Exception {
         wxaapp__createwxaqrcode_body body = new wxaapp__createwxaqrcode_body();
-        body.setPath("xx");
+        body.setPath("index/index");
         body.setWidth(500);
-        return new WeixinSDK().cgi_bin__wxaapp__createwxaqrcode(access_token,body);
+        return  Base64.encodeBase64String(new WeixinSDK().cgi_bin__wxaapp__createwxaqrcode(access_token,body));
 
     }
 
     @RequestMapping("/get")
-    public WeixinResponse get(
+    public String get(
             @RequestParam String access_token) throws Exception {
         wxa__getwxacode_body body = new wxa__getwxacode_body();
-        body.setPath("xx");
+        body.setPath("index/index");
         body.setWidth(500);
-        body.setAuto_color(false);
-        body.setIs_hyaline(false);
+        body.setAuto_color(true);
+        body.setIs_hyaline(true);
         GRB grb = new GRB();
         grb.setG(0);
         grb.setR(0);
         grb.setB(0);
         body.setLine_color(grb);
-        return new WeixinSDK().wxa__getwxacode(access_token,body);
+        return Base64.encodeBase64String(new WeixinSDK().wxa__getwxacode(access_token,body));
 
     }
 
     @RequestMapping("/getUnlimited")
-    public wxa__getwxacodeunlimit_response getUnlimited(
+    public String getUnlimited(
             @RequestParam String access_token) throws Exception {
         wxa__getwxacodeunlimit_body body = new wxa__getwxacodeunlimit_body();
         body.setScene("xxxxxxx");
-        body.setPage("pages/index/index");
-        body.setWidth(111111);
-        body.setAuto_color(false);
+        body.setPage("index/index");
+        body.setWidth(500);
+        body.setAuto_color(true);
         GRB grb = new GRB();
         grb.setG(0);
         grb.setR(0);
-        grb.setB(0);
+        grb.setB(256);
         body.setLine_color(grb);
-        body.setIs_hyaline(false);
-        return new WeixinSDK().wxa__getwxacodeunlimit(access_token,body);
+        body.setIs_hyaline(true);
+        return Base64.encodeBase64String( new WeixinSDK().wxa__getwxacodeunlimit(access_token,body));
 
     }
 

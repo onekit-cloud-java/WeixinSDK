@@ -221,50 +221,45 @@ public class WeixinSDK implements WeixinAPI {
 
     @Override
     public byte[] cgi_bin__wxaapp__createwxaqrcode(String access_token,wxaapp__createwxaqrcode_body body) throws WeixinError {
-        JsonObject result;
+
         try {
             String url = String.format("https://api.weixin.qq.com/cgi-bin/wxaapp/createwxaqrcode?access_token=%s",access_token);
             JsonObject post_body = (JsonObject) JSON.object2json(body);
-            result = (JsonObject) JSON.parse(AJAX.request(url,"post",post_body.toString()));
+            return AJAX.download(url,"post",post_body.toString());
         } catch (Exception e) {
             WeixinError error = new WeixinError();
             error.setErrcode(9527);
             error.setErrmsg(e.getMessage());
             throw error;
         }
-        return JSON.json2object(result,byte[].class);
     }
 
     @Override
-    public WeixinResponse wxa__getwxacode(String access_token,wxa__getwxacode_body body) {
-        JsonObject result;
+    public byte[] wxa__getwxacode(String access_token,wxa__getwxacode_body body) throws WeixinError{
         try {
             String url = String.format("https://api.weixin.qq.com/wxa/getwxacode?access_token=%s",access_token);
             JsonObject post_body = (JsonObject) JSON.object2json(body);
-            result = (JsonObject) JSON.parse(AJAX.request(url,"post",post_body.toString()));
+            return AJAX.download(url,"post",post_body.toString());
         } catch (Exception e) {
-            WeixinResponse error = new WeixinResponse();
+            WeixinError error = new WeixinError();
             error.setErrcode(9527);
             error.setErrmsg(e.getMessage());
-            return error;
+            throw error;
         }
-        return JSON.json2object(result,WeixinResponse.class);
     }
 
     @Override
-    public wxa__getwxacodeunlimit_response wxa__getwxacodeunlimit(String access_token,wxa__getwxacodeunlimit_body body) {
-        JsonObject result;
+    public byte[] wxa__getwxacodeunlimit(String access_token,wxa__getwxacodeunlimit_body body)throws WeixinError {
         try {
             String url = String.format("https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=%s",access_token);
             JsonObject post_body = (JsonObject) JSON.object2json(body);
-            result = (JsonObject) JSON.parse(AJAX.request(url,"post",post_body.toString()));
+            return AJAX.download(url,"post",post_body.toString());
         } catch (Exception e) {
-            wxa__getwxacodeunlimit_response error = new wxa__getwxacodeunlimit_response();
+            WeixinError error = new WeixinError();
             error.setErrcode(9527);
             error.setErrmsg(e.getMessage());
-            return error;
+            throw error;
         }
-        return JSON.json2object(result,wxa__getwxacodeunlimit_response.class);
     }
 
 
