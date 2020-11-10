@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.xml.crypto.Data;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -114,7 +114,7 @@ public class Demo {
             @RequestParam String session_key) throws Exception {
         wxa__setuserinteractivedata_body body = new wxa__setuserinteractivedata_body();
 
-        body.setKv_list(new ArrayList<KV>(){{add(new KV("key1","value1"));}});
+        body.setKv_list(new ArrayList<KV<Integer>>(){{add(new KV<Integer>("1",0));}});
         String signature = new WeixinSDK()._crypto(sig_method, session_key,JSON.object2string(body));
 
         return new WeixinSDK().wxa__setuserinteractivedata(access_token,openid,signature,sig_method,body);
@@ -128,7 +128,7 @@ public class Demo {
             @RequestParam String session_key) throws Exception {
         wxa__set_user_storage_body body = new wxa__set_user_storage_body();
 
-        body.setKv_list(new ArrayList<KV>(){{add(new KV("key1","value1"));}});
+        body.setKv_list(new ArrayList<KV<String>>(){{add(new KV<String>("key1","value1"));}});
         String signature = new WeixinSDK()._crypto(sig_method, session_key,JSON.object2string(body));
 
         return new WeixinSDK().wxa__set_user_storage(access_token,openid,signature,sig_method,body);
@@ -158,7 +158,7 @@ public class Demo {
     }
 
     @RequestMapping("/createQRCode")
-    public cgi_bin__wxaapp__createwxaqrcode_response createQRCode(
+    public byte[] createQRCode(
             @RequestParam String access_token) throws Exception {
         wxaapp__createwxaqrcode_body body = new wxaapp__createwxaqrcode_body();
         body.setPath("xx");

@@ -220,19 +220,19 @@ public class WeixinSDK implements WeixinAPI {
     }
 
     @Override
-    public cgi_bin__wxaapp__createwxaqrcode_response cgi_bin__wxaapp__createwxaqrcode(String access_token,wxaapp__createwxaqrcode_body body) {
+    public byte[] cgi_bin__wxaapp__createwxaqrcode(String access_token,wxaapp__createwxaqrcode_body body) throws WeixinError {
         JsonObject result;
         try {
             String url = String.format("https://api.weixin.qq.com/cgi-bin/wxaapp/createwxaqrcode?access_token=%s",access_token);
             JsonObject post_body = (JsonObject) JSON.object2json(body);
             result = (JsonObject) JSON.parse(AJAX.request(url,"post",post_body.toString()));
         } catch (Exception e) {
-            cgi_bin__wxaapp__createwxaqrcode_response error = new cgi_bin__wxaapp__createwxaqrcode_response();
+            WeixinError error = new WeixinError();
             error.setErrcode(9527);
             error.setErrmsg(e.getMessage());
-            return error;
+            throw error;
         }
-        return JSON.json2object(result,cgi_bin__wxaapp__createwxaqrcode_response.class);
+        return JSON.json2object(result,byte[].class);
     }
 
     @Override
