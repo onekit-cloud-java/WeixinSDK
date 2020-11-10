@@ -176,9 +176,9 @@ public class Demo {
         body.setWidth(500);
         body.setAuto_color(true);
         body.setIs_hyaline(true);
-        GRB grb = new GRB();
+        RGB grb = new RGB();
         grb.setG(0);
-        grb.setR(0);
+        grb.setR(255);
         grb.setB(0);
         body.setLine_color(grb);
         return Base64.encodeBase64String(new WeixinSDK().wxa__getwxacode(access_token,body));
@@ -193,10 +193,10 @@ public class Demo {
         body.setPage("index/index");
         body.setWidth(500);
         body.setAuto_color(true);
-        GRB grb = new GRB();
+        RGB grb = new RGB();
         grb.setG(0);
         grb.setR(0);
-        grb.setB(256);
+        grb.setB(255);
         body.setLine_color(grb);
         body.setIs_hyaline(true);
         return Base64.encodeBase64String( new WeixinSDK().wxa__getwxacodeunlimit(access_token,body));
