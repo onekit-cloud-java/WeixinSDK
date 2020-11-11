@@ -268,7 +268,7 @@ public class WeixinSDK implements WeixinAPI {
     public WeixinResponse cgi_bin__message__subscribe__send(String access_token,subscribe__send_body body) {
         JsonObject result;
         try {
-            String url = String.format("https://api.weixin.qq.com/datacube/getgameanalysisdata?access_token=%s",access_token);
+            String url = String.format("https://api.weixin.qq.com/cgi-bin/message/subscribe/send?access_token=%s",access_token);
             JsonObject post_body = (JsonObject) JSON.object2json(body);
             result = (JsonObject) JSON.parse(AJAX.request(url,"post",post_body.toString()));
         } catch (Exception e) {
