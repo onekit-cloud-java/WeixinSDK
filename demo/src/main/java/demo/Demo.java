@@ -40,7 +40,7 @@ public class Demo {
     @RequestMapping("/code2Session")
     public snc__jscode2session_response code2Session(
             @RequestParam String js_code) throws Exception {
-        return new WeixinSDK().snc__jscode2session(WeixinAccount.appid, WeixinAccount.secret, js_code,"client_credential");
+        return new WeixinSDK().snc__jscode2session(WeixinAccount.appid, WeixinAccount.secret, js_code,"authorization_code");
     }
 
     @RequestMapping("/imgSecCheck")
