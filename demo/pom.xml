@@ -22,7 +22,7 @@
         <dependency>
             <groupId>cn.onekit.x2x.cloud</groupId>
             <artifactId>weixin-sdk</artifactId>
-            <version>1.4.3</version>
+            <version>1.5.2</version>
         </dependency>
 
         <dependency>

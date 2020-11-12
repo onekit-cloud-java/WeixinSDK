@@ -1,5 +1,6 @@
 package demo;
 
+import cn.onekit.thekit.CRYPTO;
 import cn.onekit.thekit.JSON;
 import com.qq.weixin.api.entity.*;
 import com.qq.weixin.api.sdk.WeixinSDK;
@@ -22,6 +23,19 @@ import java.util.HashMap;
 public class Demo {
     final String sig_method = "hmac_sha256";
 
+    @RequestMapping("/decrypt")
+    public String decrypt(
+            @RequestParam String session_key,
+            @RequestParam String iv,
+            @RequestParam String encryptedData,
+            @RequestParam String rawData,
+            @RequestParam String signature
+    ) throws Exception {
+        if(!new WeixinSDK()._signRaw(rawData,session_key).equals(signature)){
+            throw new Exception("bad sign!!");
+        }
+        return new WeixinSDK()._decrypt(encryptedData,iv,session_key);
+    }
     @RequestMapping("/getAccessToken")
     public cgi_bin__token_response getAccessToken() throws Exception {
         return new WeixinSDK().cgi_bin__token(WeixinAccount.appid, WeixinAccount.secret, "client_credential");
@@ -33,7 +47,7 @@ public class Demo {
             @RequestParam String openid,
             @RequestParam String session_key) throws Exception {
         String body = "xx";
-        String signature = new WeixinSDK()._crypto(sig_method, session_key,body);
+        String signature = new WeixinSDK()._signBody(sig_method, session_key,body);
         return new WeixinSDK().wxa__checksession(access_token,openid,signature,sig_method,body);
     }
 
@@ -102,7 +116,7 @@ public class Demo {
         wxa__remove_user_storage_body body = new wxa__remove_user_storage_body();
 
         body.setKey(new ArrayList<String>(){{add("key1");}});
-        String signature = new WeixinSDK()._crypto(sig_method, session_key, JSON.object2string(body));
+        String signature = new WeixinSDK()._signBody(sig_method, session_key, JSON.object2string(body));
 
         return new WeixinSDK().wxa__remove_user_storage(access_token,openid,signature,sig_method,body);
 
@@ -116,7 +130,7 @@ public class Demo {
         wxa__setuserinteractivedata_body body = new wxa__setuserinteractivedata_body();
 
         body.setKv_list(new ArrayList<KV<Integer>>(){{add(new KV<Integer>("1",0));}});
-        String signature = new WeixinSDK()._crypto(sig_method, session_key,JSON.object2string(body));
+        String signature = new WeixinSDK()._signBody(sig_method, session_key,JSON.object2string(body));
 
         return new WeixinSDK().wxa__setuserinteractivedata(access_token,openid,signature,sig_method,body);
 
@@ -130,7 +144,7 @@ public class Demo {
         wxa__set_user_storage_body body = new wxa__set_user_storage_body();
 
         body.setKv_list(new ArrayList<KV<String>>(){{add(new KV<String>("key1","value1"));}});
-        String signature = new WeixinSDK()._crypto(sig_method, session_key,JSON.object2string(body));
+        String signature = new WeixinSDK()._signBody(sig_method, session_key,JSON.object2string(body));
 
         return new WeixinSDK().wxa__set_user_storage(access_token,openid,signature,sig_method,body);
 
