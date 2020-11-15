@@ -1,30 +1,18 @@
 package com.qq.weixin.api.sdk;
 
-import cn.onekit.thekit.*;
+import cn.onekit.thekit.AJAX;
+import cn.onekit.thekit.CRYPTO;
+import cn.onekit.thekit.JSON;
+import cn.onekit.thekit.STRING;
 import com.google.gson.JsonObject;
 import com.qq.weixin.api.WeixinAPI;
 import com.qq.weixin.api.entity.*;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
 
 public class WeixinSDK implements WeixinAPI {
 
-     public String _signBody(String sig_method, String session_key, String data) throws Exception {
-        SIGN.Method method;
-        switch (sig_method) {
-            case "hmac_sha256":
-                method = SIGN.Method.HMACSHA256;
-                break;
-            default:
-                throw new Exception(sig_method);
-        }
-        return new SIGN(method).sign(session_key, data);
-    }
-    public String _signRaw(String rawData,String session_key) throws Exception {
-        return new SIGN(SIGN.Method.SHA1).sign( rawData+session_key);
-    }
     public String _decrypt(String encryptedData,String iv,String session_key) throws Exception {
         return new CRYPTO(CRYPTO.Key.AES, CRYPTO.Mode.PKCS5, 128).decrypt(encryptedData, iv, session_key);
     }
@@ -94,7 +82,7 @@ public class WeixinSDK implements WeixinAPI {
         JsonObject reuslt;
         try {
             String url = String.format("https://api.weixin.qq.com/wxa/img_sec_check?access_token=%s",access_token);
-            reuslt = (JsonObject) JSON.parse(AJAX.upload(url,body.getMedia().getValue(),body.getMedia().getContentType()));
+            reuslt = (JsonObject) JSON.parse(AJAX.upload(url,body.getMedia().getValue()));
         } catch (Exception e) {
             snc__jscode2session_response error = new snc__jscode2session_response();
             error.setErrcode(9527);
