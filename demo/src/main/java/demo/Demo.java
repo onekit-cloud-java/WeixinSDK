@@ -1,9 +1,8 @@
 package demo;
 
-import cn.onekit.thekit.CRYPTO;
 import cn.onekit.thekit.JSON;
+import com.qq.weixin.api.WeixinSDK;
 import com.qq.weixin.api.entity.*;
-import com.qq.weixin.api.sdk.WeixinSDK;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,10 +18,10 @@ import java.util.HashMap;
 
 
 @RestController
-@RequestMapping("/weixin_demo")
+@RequestMapping("/")
 public class Demo {
     final String sig_method = "hmac_sha256";
-
+    WeixinSDK sdk=new WeixinSDK("https://api.weixin.qq.com");
     @RequestMapping("/decrypt")
     public String decrypt(
             @RequestParam String session_key,
@@ -31,14 +30,14 @@ public class Demo {
             @RequestParam String rawData,
             @RequestParam String signature
     ) throws Exception {
-        if(!new WeixinSDK()._signRaw(rawData,session_key).equals(signature)){
+        if(!sdk._signRaw(rawData,session_key).equals(signature)){
             throw new Exception("bad sign!!");
         }
-        return new WeixinSDK()._decrypt(encryptedData,iv,session_key);
+        return sdk._decrypt(encryptedData,iv,session_key);
     }
     @RequestMapping("/getAccessToken")
     public cgi_bin__token_response getAccessToken() throws Exception {
-        return new WeixinSDK().cgi_bin__token(WeixinAccount.appid, WeixinAccount.secret, "client_credential");
+        return sdk.cgi_bin__token(WeixinAccount.appid, WeixinAccount.secret, "client_credential");
     }
 
     @RequestMapping("/checkSessionKey")
@@ -47,14 +46,14 @@ public class Demo {
             @RequestParam String openid,
             @RequestParam String session_key) throws Exception {
         String body = "xx";
-        String signature = new WeixinSDK()._signBody(sig_method, session_key,body);
-        return new WeixinSDK().wxa__checksession(access_token,openid,signature,sig_method,body);
+        String signature = sdk._signBody(sig_method, session_key,body);
+        return sdk.wxa__checksession(access_token,openid,signature,sig_method,body);
     }
 
     @RequestMapping("/code2Session")
     public snc__jscode2session_response code2Session(
             @RequestParam String js_code) throws Exception {
-        return new WeixinSDK().snc__jscode2session(WeixinAccount.appid, WeixinAccount.secret, js_code,"authorization_code");
+        return sdk.snc__jscode2session(WeixinAccount.appid, WeixinAccount.secret, js_code,"authorization_code");
     }
 
     @RequestMapping("/imgSecCheck")
@@ -72,18 +71,10 @@ public class Demo {
             bos.write(b, 0, n);
         }
 
-        byte[] data = bos.toByteArray();
+        byte[] body = bos.toByteArray();
         bos.close();
         fis.close();
-        //
-        Media Media = new Media();
-        Media.setContentType("image/png");
-        Media.setValue(data);
-        //
-        wxa__img_sec_check_body body = new wxa__img_sec_check_body();
-        body.setMedia(Media);
-
-        return new WeixinSDK().wxa__img_sec_check(access_token, body);
+        return sdk.wxa__img_sec_check(access_token, body);
 
     }
 
@@ -93,7 +84,7 @@ public class Demo {
         wxa__media_check_async_body body = new wxa__media_check_async_body();
         body.setMedia_type(2);
         body.setMedia_url("#");
-        return new WeixinSDK().wxa__media_check_async(access_token,body);
+        return sdk.wxa__media_check_async(access_token,body);
 
 
     }
@@ -103,7 +94,7 @@ public class Demo {
             @RequestParam String access_token) throws Exception {
         wxa__msg_sec_check_body body = new wxa__msg_sec_check_body();
         body.setContent("xx");
-        return new WeixinSDK().wxa__msg_sec_check(access_token,body);
+        return sdk.wxa__msg_sec_check(access_token,body);
 
     }
 
@@ -116,9 +107,9 @@ public class Demo {
         wxa__remove_user_storage_body body = new wxa__remove_user_storage_body();
 
         body.setKey(new ArrayList<String>(){{add("key1");}});
-        String signature = new WeixinSDK()._signBody(sig_method, session_key, JSON.object2string(body));
+        String signature = sdk._signBody(sig_method, session_key, JSON.object2string(body));
 
-        return new WeixinSDK().wxa__remove_user_storage(access_token,openid,signature,sig_method,body);
+        return sdk.wxa__remove_user_storage(access_token,openid,signature,sig_method,body);
 
     }
 
@@ -130,9 +121,9 @@ public class Demo {
         wxa__setuserinteractivedata_body body = new wxa__setuserinteractivedata_body();
 
         body.setKv_list(new ArrayList<KV<Integer>>(){{add(new KV<Integer>("1",0));}});
-        String signature = new WeixinSDK()._signBody(sig_method, session_key,JSON.object2string(body));
+        String signature = sdk._signBody(sig_method, session_key,JSON.object2string(body));
 
-        return new WeixinSDK().wxa__setuserinteractivedata(access_token,openid,signature,sig_method,body);
+        return sdk.wxa__setuserinteractivedata(access_token,openid,signature,sig_method,body);
 
     }
 
@@ -144,9 +135,9 @@ public class Demo {
         wxa__set_user_storage_body body = new wxa__set_user_storage_body();
 
         body.setKv_list(new ArrayList<KV<String>>(){{add(new KV<String>("key1","value1"));}});
-        String signature = new WeixinSDK()._signBody(sig_method, session_key,JSON.object2string(body));
+        String signature = sdk._signBody(sig_method, session_key,JSON.object2string(body));
 
-        return new WeixinSDK().wxa__set_user_storage(access_token,openid,signature,sig_method,body);
+        return sdk.wxa__set_user_storage(access_token,openid,signature,sig_method,body);
 
     }
 
@@ -154,7 +145,7 @@ public class Demo {
     public cgi_bin__message__wxopen__activityid__create_response createActivityId(
             @RequestParam String access_token,
             @RequestParam String unionid) throws Exception {
-        return new WeixinSDK().cgi_bin__message__wxopen__activityid__create(access_token,unionid);
+        return sdk.cgi_bin__message__wxopen__activityid__create(access_token,unionid);
 
     }
 
@@ -168,7 +159,7 @@ public class Demo {
         parameter.setName("name1");
         parameter.setValue("value1");
         body.setTemplate_info(new ArrayList<Parameter>(){{add(parameter);}});
-        return new WeixinSDK().cgi_bin__message__wxopen__updatablemsg__send(access_token,body);
+        return sdk.cgi_bin__message__wxopen__updatablemsg__send(access_token,body);
 
     }
 
@@ -178,7 +169,7 @@ public class Demo {
         wxaapp__createwxaqrcode_body body = new wxaapp__createwxaqrcode_body();
         body.setPath("index/index");
         body.setWidth(500);
-        return  Base64.encodeBase64String(new WeixinSDK().cgi_bin__wxaapp__createwxaqrcode(access_token,body));
+        return  Base64.encodeBase64String(sdk.cgi_bin__wxaapp__createwxaqrcode(access_token,body));
 
     }
 
@@ -195,7 +186,7 @@ public class Demo {
         grb.setR(255);
         grb.setB(0);
         body.setLine_color(grb);
-        return Base64.encodeBase64String(new WeixinSDK().wxa__getwxacode(access_token,body));
+        return Base64.encodeBase64String(sdk.wxa__getwxacode(access_token,body));
 
     }
 
@@ -213,7 +204,7 @@ public class Demo {
         grb.setB(255);
         body.setLine_color(grb);
         body.setIs_hyaline(true);
-        return Base64.encodeBase64String( new WeixinSDK().wxa__getwxacodeunlimit(access_token,body));
+        return Base64.encodeBase64String( sdk.wxa__getwxacodeunlimit(access_token,body));
 
     }
 
@@ -231,7 +222,7 @@ public class Demo {
         body.setMiniprogram_state("formal");
         body.setLang("zh_CN");
 
-        return new WeixinSDK().cgi_bin__message__subscribe__send(access_token,body);
+        return sdk.cgi_bin__message__subscribe__send(access_token,body);
     }
 
 }
