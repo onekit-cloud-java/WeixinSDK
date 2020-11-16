@@ -66,9 +66,8 @@ public class WeixinSDK implements WeixinAPI {
                 put("appid", wx_appid);
                 put("secret", wx_secret);
                 put("grant_type", wx_grant_type);
-                if(!STRING.isEmpty(wx_js_code)){
-                    put("js_code",wx_js_code);
-                }
+                put("js_code",wx_js_code);
+
             }}));
         } catch (Exception e) {
             snc__jscode2session_response error = new snc__jscode2session_response();

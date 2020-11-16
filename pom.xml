@@ -6,7 +6,7 @@
 
     <groupId>cn.onekit.x2x.cloud</groupId>
     <artifactId>weixin-sdk</artifactId>
-    <version>1.7.0</version>
+    <version>1.7.1</version>
     <name>WeixinSDK</name>
     <url>https://github.com/onekit-cloud-java/weixinsdk</url>
     <description>weixin cloud sdk</description>
