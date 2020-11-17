@@ -6,7 +6,7 @@
 
     <groupId>cn.onekit.x2x.cloud</groupId>
     <artifactId>weixin-sdk</artifactId>
-    <version>2.0.1</version>
+    <version>2.1.1</version>
     <name>WeixinSDK</name>
     <url>https://github.com/onekit-cloud-java/weixinsdk</url>
     <description>weixin cloud sdk</description>
@@ -14,12 +14,12 @@
         <dependency>
             <groupId>cn.onekit.x2x.cloud</groupId>
             <artifactId>thekit</artifactId>
-            <version>2.0.0</version>
+            <version>3.0.0</version>
         </dependency>
         <dependency>
             <groupId>cn.onekit.x2x.cloud</groupId>
             <artifactId>weixin</artifactId>
-            <version>2.0.1</version>
+            <version>2.1.1</version>
         </dependency>
     </dependencies>
 
@@ -140,17 +140,7 @@
                         </configuration>
                     </plugin>
                 </plugins>
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-gpg-plugin</artifactId>
-                            <configuration>
-                                <skip>true</skip>
-                            </configuration>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
+
             </build>
             <distributionManagement>
                 <snapshotRepository>
