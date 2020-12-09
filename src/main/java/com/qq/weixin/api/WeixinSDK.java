@@ -3,13 +3,13 @@ package com.qq.weixin.api;
 import cn.onekit.thekit.AJAX;
 import cn.onekit.thekit.CRYPTO;
 import cn.onekit.thekit.JSON;
-import cn.onekit.thekit.STRING;
 import com.google.gson.JsonObject;
 import com.qq.weixin.api.entity.*;
 
 import java.util.HashMap;
 
 
+@SuppressWarnings("unused")
 public class WeixinSDK implements WeixinAPI {
 
     private final String host;
@@ -20,6 +20,9 @@ public class WeixinSDK implements WeixinAPI {
     public String _decrypt(String wx_encryptedData,String wx_iv,String wx_session_key) throws Exception {
         return new CRYPTO(CRYPTO.Key.AES, CRYPTO.Mode.PKCS5, 128).decrypt(wx_encryptedData, wx_iv, wx_session_key);
     }
+
+
+
     @Override
     public cgi_bin__token_response cgi_bin__token(String wx_appid, String wx_secret, String wx_grant_type) throws WeixinError{
         JsonObject result;
@@ -128,7 +131,7 @@ public class WeixinSDK implements WeixinAPI {
 
     }
 
-    @Override
+   /* @Override
     public WeixinResponse wxa__remove_user_storage(String wx_access_token, String openid, String signature, String sig_method, wxa__remove_user_storage_body wx_body) {
         JsonObject result;
         try {
@@ -211,7 +214,7 @@ public class WeixinSDK implements WeixinAPI {
             return error;
         }
         return JSON.json2object(result,WeixinResponse.class);
-    }
+    }*/
 
     @Override
     public byte[] cgi_bin__wxaapp__createwxaqrcode(String wx_access_token,wxaapp__createwxaqrcode_body wx_body) throws WeixinError {
@@ -256,10 +259,8 @@ public class WeixinSDK implements WeixinAPI {
         }
     }
 
-
-
     @Override
-    public WeixinResponse cgi_bin__message__subscribe__send(String wx_access_token,subscribe__send_body wx_body) {
+    public WeixinResponse cgi_bin__message__subscribe__send(String wx_access_token,cgi_bin__message__subscribe__send_body wx_body) {
         JsonObject result;
         try {
             String url = String.format("%s/cgi-bin/message/subscribe/send?access_token=%s",host,wx_access_token);

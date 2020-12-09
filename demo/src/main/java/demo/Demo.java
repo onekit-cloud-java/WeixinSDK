@@ -1,6 +1,6 @@
 package demo;
 
-import cn.onekit.thekit.JSON;
+
 import com.qq.weixin.api.WeixinSDK;
 import com.qq.weixin.api.entity.*;
 import org.apache.commons.codec.binary.Base64;
@@ -13,15 +13,15 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 
 @RestController
 @RequestMapping("/")
 public class Demo {
-    final String sig_method = "hmac_sha256";
-    WeixinSDK sdk=new WeixinSDK("https://api.weixin.qq.com");
+    @SuppressWarnings("FieldCanBeLocal")
+    private final String sig_method = "hmac_sha256";
+    private WeixinSDK sdk=new WeixinSDK("https://api.weixin.qq.com");
     @RequestMapping("/decrypt")
     public String decrypt(
             @RequestParam String session_key,
@@ -52,7 +52,7 @@ public class Demo {
 
     @RequestMapping("/code2Session")
     public snc__jscode2session_response code2Session(
-            @RequestParam String js_code) throws Exception {
+            @RequestParam String js_code) {
         return sdk.snc__jscode2session(WeixinAccount.appid, WeixinAccount.secret, js_code,"authorization_code");
     }
 
@@ -80,7 +80,7 @@ public class Demo {
 
     @RequestMapping("/mediaCheckAsync")
     public wxa__media_check_async_response mediaCheckAsync(
-            @RequestParam String access_token) throws Exception {
+            @RequestParam String access_token) {
         wxa__media_check_async_body body = new wxa__media_check_async_body();
         body.setMedia_type(2);
         body.setMedia_url("#");
@@ -91,14 +91,14 @@ public class Demo {
 
     @RequestMapping("/msgSecCheck")
     public WeixinResponse msgSecCheck(
-            @RequestParam String access_token) throws Exception {
+            @RequestParam String access_token)  {
         wxa__msg_sec_check_body body = new wxa__msg_sec_check_body();
         body.setContent("xx");
         return sdk.wxa__msg_sec_check(access_token,body);
 
     }
 
-    @RequestMapping("/removeUserStorage")
+   /* @RequestMapping("/removeUserStorage")
     public WeixinResponse removeUserStorage(
             @RequestParam String access_token,
             @RequestParam String openid,
@@ -120,7 +120,7 @@ public class Demo {
             @RequestParam String session_key) throws Exception {
         wxa__setuserinteractivedata_body body = new wxa__setuserinteractivedata_body();
 
-        body.setKv_list(new ArrayList<KV<Integer>>(){{add(new KV<Integer>("1",0));}});
+        body.setKv_list(new ArrayList<KV<Integer>>(){{add(new KV<>("1", 0));}});
         String signature = sdk._signBody(sig_method, session_key,JSON.object2string(body));
 
         return sdk.wxa__setuserinteractivedata(access_token,openid,signature,sig_method,body);
@@ -134,7 +134,7 @@ public class Demo {
             @RequestParam String session_key) throws Exception {
         wxa__set_user_storage_body body = new wxa__set_user_storage_body();
 
-        body.setKv_list(new ArrayList<KV<String>>(){{add(new KV<String>("key1","value1"));}});
+        body.setKv_list(new ArrayList<KV<String>>(){{add(new KV<>("key1", "value1"));}});
         String signature = sdk._signBody(sig_method, session_key,JSON.object2string(body));
 
         return sdk.wxa__set_user_storage(access_token,openid,signature,sig_method,body);
@@ -144,14 +144,14 @@ public class Demo {
     @RequestMapping("/createActivityId")
     public cgi_bin__message__wxopen__activityid__create_response createActivityId(
             @RequestParam String access_token,
-            @RequestParam String unionid) throws Exception {
+            @RequestParam String unionid) {
         return sdk.cgi_bin__message__wxopen__activityid__create(access_token,unionid);
 
     }
 
     @RequestMapping("/setUpdatableMsg")
     public WeixinResponse setUpdatableMsg(
-            @RequestParam String access_token) throws Exception {
+            @RequestParam String access_token)  {
         updatablemsg__send_body body = new updatablemsg__send_body();
         body.setActivity_id("xxx");
         body.setTarget_state(1);
@@ -161,7 +161,7 @@ public class Demo {
         body.setTemplate_info(new ArrayList<Parameter>(){{add(parameter);}});
         return sdk.cgi_bin__message__wxopen__updatablemsg__send(access_token,body);
 
-    }
+    }*/
 
     @RequestMapping("/createQRCode")
     public String createQRCode(
@@ -210,15 +210,15 @@ public class Demo {
 
     @RequestMapping("/send")
     public WeixinResponse send(
-            @RequestParam String access_token) throws Exception {
-        subscribe__send_body body = new subscribe__send_body();
+            @RequestParam String access_token)  {
+        cgi_bin__message__subscribe__send_body body = new cgi_bin__message__subscribe__send_body();
         body.setTouser("xxx");
         body.setTemplate_id("xxx");
         body.setPage("xxx");
-        subscribe__send_body.Data.DataValue dataValue = new subscribe__send_body.Data.DataValue();
+        cgi_bin__message__subscribe__send_body.Data.DataValue dataValue = new cgi_bin__message__subscribe__send_body.Data.DataValue();
         dataValue.setValue("xxx");
 
-        body.setData(new HashMap<String, subscribe__send_body.Data.DataValue>(){{put("xxx",dataValue);}});
+        body.setData(new HashMap<String, cgi_bin__message__subscribe__send_body.Data.DataValue>(){{put("xxx",dataValue);}});
         body.setMiniprogram_state("formal");
         body.setLang("zh_CN");
 
