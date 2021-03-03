@@ -1,12 +1,10 @@
 package com.qq.weixin.api;
 
-import cn.onekit.thekit.AJAX;
-import cn.onekit.thekit.CRYPTO;
-import cn.onekit.thekit.JSON;
-import com.google.gson.JsonObject;
-import com.qq.weixin.api.entity.*;
 
-import java.util.HashMap;
+import cn.onekit.thekit.CRYPTO;
+import com.qq.weixin.api.request.*;
+import com.qq.weixin.api.response.*;
+
 
 
 @SuppressWarnings("unused")
@@ -22,258 +20,218 @@ public class WeixinSDK implements WeixinAPI {
     }
 
 
-
     @Override
-    public cgi_bin__token_response cgi_bin__token(String wx_appid, String wx_secret, String wx_grant_type) throws WeixinError{
-        JsonObject result;
-        try {
-            String url = String.format("%s/cgi-bin/token",host);
-            result = (JsonObject) JSON.parse (AJAX.request(url, "get", new HashMap<String,String>(){{
-                put("appid", wx_appid);
-                put("secret", wx_secret);
-                put("grant_type", wx_grant_type);
-            }}));
-        } catch (Exception e) {
-            WeixinError error = new WeixinError();
-            error.setErrcode(9527);
-            error.setErrmsg(e.getMessage());
-            throw error;
-        }
-
-        return JSON.json2object(result,cgi_bin__token_response.class);
+    public Code2SessionResponse code2Session(Code2SessionRequest code2SessionRequest) throws WeixinError {
+        return null;
     }
 
     @Override
-    public WeixinResponse wxa__checksession(String wx_access_token,String openid,String signature,String sig_method,String wx_body) {
-        JsonObject result;
-        try {
-            String url = String.format("%s/wxa/checksession?access_token=%s&openid=%s&signature=%s&sig_method=%s",host,wx_access_token,openid,signature,sig_method);
-            result = (JsonObject) JSON.parse(AJAX.request(url,"POST", wx_body));
-        } catch (Exception e) {
-            cgi_bin__token_response error = new cgi_bin__token_response();
-            error.setErrcode(9527);
-            error.setErrmsg(e.getMessage());
-            return error;
-        }
-
-        return JSON.json2object(result,WeixinResponse.class);
-    }
-
-
-    @Override
-    public snc__jscode2session_response snc__jscode2session(String wx_appid,String wx_secret,String wx_js_code,String wx_grant_type) {
-        JsonObject result ;
-        try {
-            String url = String.format("%s/sns/jscode2session",host);
-            result  =(JsonObject) JSON.parse(AJAX.request(url,"get",new HashMap<String, String>(){{
-                put("appid", wx_appid);
-                put("secret", wx_secret);
-                put("grant_type", wx_grant_type);
-                put("js_code",wx_js_code);
-
-            }}));
-        } catch (Exception e) {
-            snc__jscode2session_response error = new snc__jscode2session_response();
-            error.setErrcode(9527);
-            error.setErrmsg(e.getMessage());
-            return error;
-        }
-
-        return JSON.json2object(result,snc__jscode2session_response.class);
-    }
-
-
-    @Override
-    public WeixinResponse wxa__img_sec_check(String wx_access_token,byte[] wx_body) {
-        JsonObject reuslt;
-        try {
-            String url = String.format("%s/wxa/img_sec_check?access_token=%s",host,wx_access_token);
-            reuslt = (JsonObject) JSON.parse(AJAX.upload(url,wx_body));
-        } catch (Exception e) {
-            snc__jscode2session_response error = new snc__jscode2session_response();
-            error.setErrcode(9527);
-            error.setErrmsg(e.getMessage());
-            return error;
-        }
-        return JSON.json2object(reuslt,WeixinResponse.class);
+    public GetPaidUnionIdResponse getPaidUnionId(GetPaidUnionIdRequest getPaidUnionIdRequest) throws WeixinError {
+        return null;
     }
 
     @Override
-    public wxa__media_check_async_response wxa__media_check_async(String wx_access_token,wxa__media_check_async_body wx_body) {
-        JsonObject result;
-        try {
-            String url = String.format("%s/wxa/media_check_async?access_token=%s",host,wx_access_token);
-            JsonObject post_body = (JsonObject) JSON.object2json(wx_body);
-            result = (JsonObject) JSON.parse(AJAX.request(url,"post",post_body.toString()));
-        } catch (Exception e) {
-            wxa__media_check_async_response error = new wxa__media_check_async_response();
-            error.setErrcode(9527);
-            error.setErrmsg(e.getMessage());
-            return error;
-        }
-        return JSON.json2object(result,wxa__media_check_async_response.class);
+    public GetAccessTokenResponse getAccessToken(GetAccessTokenRequest getAccessTokenRequest) throws WeixinError {
+        return null;
     }
 
     @Override
-    public WeixinResponse wxa__msg_sec_check(String wx_access_token, wxa__msg_sec_check_body wx_body) {
-        JsonObject result;
-        try {
-            String url = String.format("%s/wxa/msg_sec_check?access_token=%s",host,wx_access_token);
-            JsonObject post_body = (JsonObject) JSON.object2json(wx_body);
-            result = (JsonObject) JSON.parse(AJAX.request(url,"post",post_body.toString()));
-        } catch (Exception e) {
-            WeixinResponse error = new WeixinResponse();
-            error.setErrcode(9527);
-            error.setErrmsg(e.getMessage());
-            return error;
-        }
-        return JSON.json2object(result,WeixinResponse.class);
-
-    }
-
-   /* @Override
-    public WeixinResponse wxa__remove_user_storage(String wx_access_token, String openid, String signature, String sig_method, wxa__remove_user_storage_body wx_body) {
-        JsonObject result;
-        try {
-            String url = String.format("%s/wxa/remove_user_storage?access_token=%s&signature=%s&openid=%s&sig_method=%s",
-                    host,wx_access_token,openid,signature,sig_method);
-            JsonObject post_body = (JsonObject) JSON.object2json(wx_body);
-            result = (JsonObject) JSON.parse(AJAX.request(url,"post",post_body.toString()));
-
-        } catch (Exception e) {
-            WeixinResponse error = new WeixinResponse();
-            error.setErrcode(9527);
-            error.setErrmsg(e.getMessage());
-            return error;
-        }
-        return JSON.json2object(result,WeixinResponse.class);
+    public GetDailyRetainResponse getDailyRetain(GetDailyRetainRequest getDailyRetainRequest) {
+        return null;
     }
 
     @Override
-    public WeixinResponse wxa__setuserinteractivedata(String wx_access_token, String openid, String signature, String sig_method, wxa__setuserinteractivedata_body wx_body) {
-        JsonObject result;
-        try {
-            String url = String.format("%s/wxa/setuserinteractivedata?access_token=%s&signature=%s&openid=%s&sig_method=%s",
-                    host,wx_access_token,signature,openid,sig_method);
-            JsonObject post_body = (JsonObject) JSON.object2json(wx_body);
-            result = (JsonObject) JSON.parse(AJAX.request(url,"post",post_body.toString()));
-        } catch (Exception e) {
-            WeixinResponse error = new WeixinResponse();
-            error.setErrcode(9527);
-            error.setErrmsg(e.getMessage());
-            return error;
-        }
-        return JSON.json2object(result,WeixinResponse.class);
+    public GetMonthlyRetainResponse getMonthlyRetain(GetMonthlyRetainRequest getMonthlyRetainRequest) {
+        return null;
     }
 
     @Override
-    public WeixinResponse wxa__set_user_storage(String wx_access_token, String openid, String signature, String sig_method, wxa__set_user_storage_body wx_body) {
-        JsonObject result;
-        try {
-            String url = String.format("%s/wxa/set_user_storage?access_token=%s&signature=%s&openid=%s&sig_method=%s",
-                    host,wx_access_token,signature,openid,sig_method);
-            JsonObject post_body = (JsonObject) JSON.object2json(wx_body);
-            result = (JsonObject) JSON.parse(AJAX.request(url,"post",post_body.toString()));
-        } catch (Exception e) {
-            WeixinResponse error = new WeixinResponse();
-            error.setErrcode(9527);
-            error.setErrmsg(e.getMessage());
-            return error;
-        }
-        return JSON.json2object(result,WeixinResponse.class);
+    public GetWeeklyRetainResponse getWeeklyRetain(GetWeeklyRetainRequest getWeeklyRetainRequest) {
+        return null;
     }
 
     @Override
-    public cgi_bin__message__wxopen__activityid__create_response cgi_bin__message__wxopen__activityid__create(String wx_access_token, String unionid) {
-        JsonObject result;
-        try {
-            String url = String.format("%s/cgi-bin/message/wxopen/activityid/create",host);
-            result = (JsonObject) JSON.parse(AJAX.request(url,"get",new HashMap<String, String>(){{
-                put("access_token",wx_access_token);
-                put("unionid",unionid);
-            }}));
-        } catch (Exception e) {
-            cgi_bin__message__wxopen__activityid__create_response error = new cgi_bin__message__wxopen__activityid__create_response();
-            error.setErrcode(9527);
-            return error;
-        }
-        return JSON.json2object(result,cgi_bin__message__wxopen__activityid__create_response.class);
+    public GetDailySummaryResponse getDailySummary(GetDailySummaryRequest getDailySummaryRequest) {
+        return null;
     }
 
     @Override
-    public WeixinResponse cgi_bin__message__wxopen__updatablemsg__send(String wx_access_token,updatablemsg__send_body wx_body) {
-        JsonObject result;
-        try {
-            String url = String.format("%s/wxa/set_user_storage?access_token=%s",host,wx_access_token);
-            JsonObject post_body = (JsonObject) JSON.object2json(wx_body);
-            result = (JsonObject) JSON.parse(AJAX.request(url,"post",post_body.toString()));
-        } catch (Exception e) {
-            WeixinResponse error = new WeixinResponse();
-            error.setErrcode(9527);
-            error.setErrmsg(e.getMessage());
-            return error;
-        }
-        return JSON.json2object(result,WeixinResponse.class);
-    }*/
-
-    @Override
-    public byte[] cgi_bin__wxaapp__createwxaqrcode(String wx_access_token,wxaapp__createwxaqrcode_body wx_body) throws WeixinError {
-
-        try {
-            String url = String.format("%s/cgi-bin/wxaapp/createwxaqrcode?access_token=%s",host,wx_access_token);
-            JsonObject post_body = (JsonObject) JSON.object2json(wx_body);
-            return AJAX.download(url,"post",post_body.toString());
-        } catch (Exception e) {
-            WeixinError error = new WeixinError();
-            error.setErrcode(9527);
-            error.setErrmsg(e.getMessage());
-            throw error;
-        }
+    public GetDailyVisitTrendResponse getDailyVisitTrend(GetDailyVisitTrendRequest getDailyVisitTrendRequest) {
+        return null;
     }
 
     @Override
-    public byte[] wxa__getwxacode(String wx_access_token,wxa__getwxacode_body wx_body) throws WeixinError{
-        try {
-            String url = String.format("%s/wxa/getwxacode?access_token=%s",host,wx_access_token);
-            JsonObject post_body = (JsonObject) JSON.object2json(wx_body);
-            return AJAX.download(url,"post",post_body.toString());
-        } catch (Exception e) {
-            WeixinError error = new WeixinError();
-            error.setErrcode(9527);
-            error.setErrmsg(e.getMessage());
-            throw error;
-        }
+    public GetMonthlyVisitTrendResponse getMonthlyVisitTrend(GetMonthlyVisitTrendRequest getMonthlyVisitTrendRequest) {
+        return null;
     }
 
     @Override
-    public byte[] wxa__getwxacodeunlimit(String wx_access_token,wxa__getwxacodeunlimit_body wx_body)throws WeixinError {
-        try {
-            String url = String.format("%s/wxa/getwxacodeunlimit?access_token=%s",host,wx_access_token);
-            JsonObject post_body = (JsonObject) JSON.object2json(wx_body);
-            return AJAX.download(url,"post",post_body.toString());
-        } catch (Exception e) {
-            WeixinError error = new WeixinError();
-            error.setErrcode(9527);
-            error.setErrmsg(e.getMessage());
-            throw error;
-        }
+    public GetWeeklyVisitTrendResponse getWeeklyVisitTrend(GetWeeklyVisitTrendRequest getWeeklyVisitTrendRequest) {
+        return null;
     }
 
     @Override
-    public WeixinResponse cgi_bin__message__subscribe__send(String wx_access_token,cgi_bin__message__subscribe__send_body wx_body) {
-        JsonObject result;
-        try {
-            String url = String.format("%s/cgi-bin/message/subscribe/send?access_token=%s",host,wx_access_token);
-            JsonObject post_body = (JsonObject) JSON.object2json(wx_body);
-            result = (JsonObject) JSON.parse(AJAX.request(url,"post",post_body.toString()));
-        } catch (Exception e) {
-            WeixinResponse error = new WeixinResponse();
-            error.setErrcode(9527);
-            error.setErrmsg(e.getMessage());
-            return error;
-        }
-        return JSON.json2object(result,WeixinResponse.class);
+    public GetPerformanceDataResponse getPerformanceData(GetPerformanceDataRequest getPerformanceDataRequest) {
+        return null;
     }
 
+    @Override
+    public GetUserPortraitResponse getUserPortrait(GetUserPortraitRequest getUserPortraitRequest) {
+        return null;
+    }
 
+    @Override
+    public GetVisitDistributionResponse getVisitDistribution(GetVisitDistributionRequest getVisitDistributionRequest) {
+        return null;
+    }
+
+    @Override
+    public GetVisitPageResponse getVisitPage(GetVisitPageRequest getVisitPageRequest) {
+        return null;
+    }
+
+    @Override
+    public byte[] getTempMedia(GetTempMediaRequest getTempMediaRequest) throws WeixinError {
+        return new byte[0];
+    }
+
+    @Override
+    public WeixinResponse sendcustomerServiceMessage(SendcustomerServiceMessageRequest sendcustomerServiceMessageRequest) {
+        return null;
+    }
+
+    @Override
+    public WeixinResponse setTyping(SetTypingRequest setTypingRequest) {
+        return null;
+    }
+
+    @Override
+    public UploadTempMediaResponse uploadTempMedia(UploadTempMediaRequest uploadTempMediaRequest) {
+        return null;
+    }
+
+    @Override
+    public WeixinResponse uniformsend(UniformsendRequest uniformsendRequest) {
+        return null;
+    }
+
+    @Override
+    public CreateActivityIdResponse createActivityId(CreateActivityIdRequest createActivityIdRequest) {
+        return null;
+    }
+
+    @Override
+    public WeixinResponse setUpdatableMsg(SetUpdatableMsgRequest setUpdatableMsgRequest) {
+        return null;
+    }
+
+    @Override
+    public WeixinResponse applyPlugin(ApplyPluginRequest applyPluginRequest) {
+        return null;
+    }
+
+    @Override
+    public GetPluginDevApplyListResponse getPluginDevApplyList(GetPluginDevApplyListRequest getPluginDevApplyListRequest) throws WeixinError {
+        return null;
+    }
+
+    @Override
+    public GetPluginListResponse getPluginList(GetPluginListRequest getPluginListRequest) throws WeixinError {
+        return null;
+    }
+
+    @Override
+    public WeixinResponse setDevPluginApplyStatus(SetDevPluginApplyStatusRequest setDevPluginApplyStatusRequest) throws WeixinError {
+        return null;
+    }
+
+    @Override
+    public WeixinResponse unbindPlugin(UnbindPluginRequest unbindPluginRequest) throws WeixinError {
+        return null;
+    }
+
+    @Override
+    public AddResponse add(AddRequest addRequest) {
+        return null;
+    }
+
+    @Override
+    public DeleteResponse delete(DeleteRequest deleteRequest) throws WeixinError {
+        return null;
+    }
+
+    @Override
+    public GetListResponse getList(GetListRequest getListRequest) throws WeixinError {
+        return null;
+    }
+
+    @Override
+    public WeixinResponse setShowStatus(SetShowStatusRequest setShowStatusRequest) throws WeixinError {
+        return null;
+    }
+
+    @Override
+    public byte[] createQRCode(CreateQRCodeRequest createQRCodeRequest) throws WeixinError {
+        return new byte[0];
+    }
+
+    @Override
+    public byte[] get(GetRequest getRequest) throws WeixinError {
+        return new byte[0];
+    }
+
+    @Override
+    public byte[] getUnlimited(GetUnlimitedRequest getUnlimitedRequest) throws WeixinError {
+        return new byte[0];
+    }
+
+    @Override
+    public String generate(GenerateRequest generateRequest) throws WeixinError {
+        return null;
+    }
+
+    @Override
+    public WeixinResponse imgSecCheck(ImgSecCheckRequest imgSecCheckRequest) {
+        return null;
+    }
+
+    @Override
+    public MediaCheckAsyncResponse mediaCheckAsync(MediaCheckAsyncRequest mediaCheckAsyncRequest) {
+        return null;
+    }
+
+    @Override
+    public WeixinResponse msgSecCheck(MsgSecCheckRequest msgSecCheckRequest) {
+        return null;
+    }
+
+    @Override
+    public GetOpenDataResponse getOpenData(GetOpenDataRequest getOpenDataRequest) {
+        return null;
+    }
+
+    @Override
+    public GetVoIPSignResponse getVoIPSign(GetVoIPSignRequest getVoIPSignRequest) {
+        return null;
+    }
+
+    @Override
+    public SendSmsResponse sendSms(SendSmsRequest sendSmsRequest) {
+        return null;
+    }
+
+    @Override
+    public WeixinResponse aiCrop(AiCropRequest aiCropRequest) {
+        return null;
+    }
+
+    @Override
+    public WeixinResponse scanQRCode(ScanQRCodeRequest scanQRCodeRequest) {
+        return null;
+    }
+
+    @Override
+    public WeixinResponse superresolution(SuperresolutionRequest superresolutionRequest) {
+        return null;
+    }
 }
