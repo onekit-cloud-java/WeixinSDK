@@ -1,7 +1,10 @@
 package com.qq.weixin.api;
 
 
+import cn.onekit.thekit.AJAX;
 import cn.onekit.thekit.CRYPTO;
+import cn.onekit.thekit.JSON;
+import com.google.gson.JsonObject;
 import com.qq.weixin.api.request.*;
 import com.qq.weixin.api.response.*;
 
@@ -15,6 +18,7 @@ public class WeixinSDK implements WeixinAPI {
     public WeixinSDK(String host){
         this.host=host;
     }
+
     public String _decrypt(String wx_encryptedData,String wx_iv,String wx_session_key) throws Exception {
         return new CRYPTO(CRYPTO.Key.AES, CRYPTO.Mode.PKCS5, 128).decrypt(wx_encryptedData, wx_iv, wx_session_key);
     }
@@ -22,7 +26,28 @@ public class WeixinSDK implements WeixinAPI {
 
     @Override
     public Code2SessionResponse code2Session(Code2SessionRequest code2SessionRequest) throws WeixinError {
-        return null;
+        try {
+            String url = String.format("%s/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=%S", host,
+                    code2SessionRequest.getAppid(),
+                    code2SessionRequest.getSecret(),
+                    code2SessionRequest.getJs_code(),
+                    code2SessionRequest.
+            );
+
+            /////////////////////////////////////////
+            JsonObject result = (JsonObject) JSON.parse(AJAX.request(url));
+            if (result.get("errorCode").getAsInt() != 0) {
+                throw JSON.json2object(result, WeixinError.class);
+            }
+            //////////////////////////////////////
+            return JSON.json2object(result, Code2SessionResponse.class);
+        } catch (WeixinError e) {
+            throw e;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new WeixinError();
+        }
+
     }
 
     @Override
