@@ -27,18 +27,17 @@ public class WeixinSDK implements WeixinAPI {
     @Override
     public Code2SessionResponse code2Session(Code2SessionRequest code2SessionRequest) throws WeixinError {
         try {
-            String url = String.format("%s/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=%S", host,
+            String url = String.format("%s/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=%s", host,
                     code2SessionRequest.getAppid(),
                     code2SessionRequest.getSecret(),
                     code2SessionRequest.getJs_code(),
-                    code2SessionRequest.
+                    Code2SessionRequest.Grant_type.authorization_code
             );
-
             /////////////////////////////////////////
             JsonObject result = (JsonObject) JSON.parse(AJAX.request(url));
-            if (result.get("errorCode").getAsInt() != 0) {
-                throw JSON.json2object(result, WeixinError.class);
-            }
+//            if (result.get("errcode").getAsInt() != 0) {
+//                throw JSON.json2object(result, WeixinError.class);
+//            }
             //////////////////////////////////////
             return JSON.json2object(result, Code2SessionResponse.class);
         } catch (WeixinError e) {
@@ -52,12 +51,65 @@ public class WeixinSDK implements WeixinAPI {
 
     @Override
     public GetPaidUnionIdResponse getPaidUnionId(GetPaidUnionIdRequest getPaidUnionIdRequest) throws WeixinError {
-        return null;
+        try {
+            if(getPaidUnionIdRequest.getTransaction_id()!=null){
+                String url = String.format("%s/wxa/getpaidunionid?access_token=%s&openid=%s&transaction_id=%s", host,
+                        getPaidUnionIdRequest.getAccess_token(),
+                        getPaidUnionIdRequest.getOpenid(),
+                        getPaidUnionIdRequest.getTransaction_id()
+                );
+                /////////////////////////////////////////
+                JsonObject result = (JsonObject) JSON.parse(AJAX.request(url));
+            /*if (result.get("errcode").getAsInt() != 0) {
+                throw JSON.json2object(result, WeixinError.class);
+            }*/
+                //////////////////////////////////////
+                return JSON.json2object(result, GetPaidUnionIdResponse.class);
+            }else{
+                String url = String.format("%s/wxa/getpaidunionid?access_token=%s&openid=%s&mch_id=%s&out_trade_no=%s", host,
+                        getPaidUnionIdRequest.getAccess_token(),
+                        getPaidUnionIdRequest.getOpenid(),
+                        getPaidUnionIdRequest.getMch_id(),
+                        getPaidUnionIdRequest.getOut_trade_no()
+                );
+                /////////////////////////////////////////
+                JsonObject result = (JsonObject) JSON.parse(AJAX.request(url));
+            /*if (result.get("errcode").getAsInt() != 0) {
+                throw JSON.json2object(result, WeixinError.class);
+            }*/
+                //////////////////////////////////////
+                return JSON.json2object(result, GetPaidUnionIdResponse.class);
+            }
+
+        } catch (WeixinError e) {
+            throw e;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new WeixinError();
+        }
     }
 
     @Override
     public GetAccessTokenResponse getAccessToken(GetAccessTokenRequest getAccessTokenRequest) throws WeixinError {
-        return null;
+        try {
+            String url = String.format("%s/cgi-bin/token?grant_type=%s&appid=%s&secret=%s", host,
+                    GetAccessTokenRequest.Grant_type.client_credential,
+                    getAccessTokenRequest.getAppid(),
+                    getAccessTokenRequest.getSecret()
+            );
+            /////////////////////////////////////////
+            JsonObject result = (JsonObject) JSON.parse(AJAX.request(url));
+            /*if (result.get("errcode").getAsInt() != 0) {
+                throw JSON.json2object(result, WeixinError.class);
+            }*/
+            //////////////////////////////////////
+            return JSON.json2object(result, GetAccessTokenResponse.class);
+        } catch (WeixinError e) {
+            throw e;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new WeixinError();
+        }
     }
 
     @Override

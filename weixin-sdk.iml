@@ -24,7 +24,7 @@
     <orderEntry type="library" name="Maven: org.apache.tomcat:tomcat-annotations-api:9.0.38" level="project" />
     <orderEntry type="library" name="Maven: org.dom4j:dom4j:2.0.0" level="project" />
     <orderEntry type="library" name="Maven: jaxen:jaxen:1.1.6" level="project" />
-    <orderEntry type="library" name="Maven: cn.onekit.x2x.cloud:weixin:2.3.1" level="project" />
+    <orderEntry type="library" name="Maven: cn.onekit.x2x.cloud:weixin:2.3.3" level="project" />
     <orderEntry type="library" name="Maven: cn.onekit.x2x.cloud:TheKit:4.0.3" level="project" />
   </component>
 </module>

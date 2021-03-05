@@ -31,7 +31,7 @@
         <dependency>
             <groupId>cn.onekit.x2x.cloud</groupId>
             <artifactId>weixin</artifactId>
-            <version>2.3.1</version>
+            <version>2.3.3</version>
         </dependency>
     </dependencies>
 
